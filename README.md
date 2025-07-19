@@ -62,7 +62,7 @@ const db = firebase.firestore();
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
         
         // 2. حفظ بيانات إضافية في Firestore
-        await db.collection('trainees').doc(userCredential.user.uid).set({
+        await db.collection('Trainee').doc(userCredential.user.uid).set({
             name: name,
             email: email,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -89,7 +89,7 @@ const db = firebase.firestore();
     
     // عرض قائمة المتدربين
     function loadTrainees() {
-        db.collection('trainees').get()
+        db.collection('Trainee').get()
             .then((querySnapshot) => {
                 const template = document.getElementById('traineeTemplate').content;
                 const container = document.getElementById('traineesList');
