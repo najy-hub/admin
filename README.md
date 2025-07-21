@@ -122,11 +122,8 @@
   <script>
     <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head>
-  <!-- الأجزاء الأخرى من head تبقى كما هي -->
-</head>
+
 <body>
-  <!-- الأجزاء الأخرى من HTML تبقى كما هي -->
 
   <script>
   // 1. تعريف العناصر أولاً
