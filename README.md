@@ -1,152 +1,204 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل متدرب جديد</title>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .register-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            width: 350px;
-            text-align: center;
-        }
-        .form-group {
-            margin-bottom: 20px;
-            text-align: right;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .error {
-            color: red;
-            margin-top: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل الدخول - رحلة المهندس</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --secondary-color: #3f37c9;
+      --accent-color: #4895ef;
+      --white: #ffffff;
+      --light-gray: #f8f9fa;
+    }
+
+    
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--light-gray);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    
+    .login-container {
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      padding: 30px;
+      width: 100%;
+      max-width: 400px;
+    }
+    
+    .login-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .login-header h1 {
+      color: var(--primary-color);
+      margin: 0 0 10px;
+    }
+    
+    .login-form .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .login-form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    
+    .login-form input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+      font-family: 'Cairo', sans-serif;
+    }
+    
+    .login-form button {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 5px;
+      width: 100%;
+      font-size: 16px;
+      font-family: 'Cairo', sans-serif;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .login-form button:hover {
+      background: var(--secondary-color);
+    }
+    
+    .error-message {
+      color: #ff4444;
+      text-align: center;
+      margin-top: 15px;
+      display: none;
+    }
+    
+    @media (max-width: 480px) {
+      .login-container {
+        margin: 20px;
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="register-container">
-        <h2>تسجيل متدرب جديد</h2>
-        <form id="registerForm">
-            <div class="form-group">
-                <label for="name">الاسم الكامل</label>
-                <input type="text" id="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">البريد الإلكتروني</label>
-                <input type="email" id="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">كلمة المرور (6 أحرف على الأقل)</label>
-                <input type="password" id="password" required minlength="6">
-            </div>
-            <button type="submit">تسجيل</button>
-            <div id="errorMsg" class="error"></div>
-        </form>
-        <p>لديك حساب بالفعل؟ <a href="login.html">سجل الدخول</a></p>
+  <div class="login-container">
+    <div class="login-header">
+      <h1>تسجيل الدخول</h1>
+      <p>منصة رحلة المهندس المحترف</p>
     </div>
+    
+    <form class="login-form" id="loginForm">
+      <div class="form-group">
+        <label for="email">البريد الإلكتروني</label>
+        <input type="email" id="email" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">كلمة المرور</label>
+        <input type="password" id="password" required>
+      </div>
+      
+      <button type="submit">تسجيل الدخول</button>
+      <div class="error-message" id="errorMessage"></div>
+    </form>
+  </div>
 
-    <script>
-        // تهيئة Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyBWdrUtLP4fVKHDmQDC6nUJzBMPA7AmbMc",
-            authDomain: "solar-engineer-43cbc.firebaseapp.com",
-            projectId: "solar-engineer-43cbc",
-            storageBucket: "solar-engineer-43cbc.firebasestorage.app",
-            messagingSenderId: "816573344174",
-            appId: "1:816573344174:web:b472b052d26b7be1d7003f"
-        };
-        
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+  <script>
+    <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <!-- الأجزاء الأخرى من head تبقى كما هي -->
+</head>
+<body>
+  <!-- الأجزاء الأخرى من HTML تبقى كما هي -->
 
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const errorMsg = document.getElementById('errorMsg');
-            
-            errorMsg.textContent = '';
-            
-            // إنشاء حساب جديد في Firebase Authentication
-            auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // نجح التسجيل
-                    const user = userCredential.user;
-                    
-                    // حفظ بيانات إضافية في Firestore
-                    return db.collection('trainees').doc(user.uid).set({
-                        name: name,
-                        email: email,
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                        userType: "trainee",
-                        lastLogin: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                })
-                .then(() => {
-                    // إرسال رسالة تحقق إلى البريد الإلكتروني (اختياري)
-                    return auth.currentUser.sendEmailVerification();
-                })
-                .then(() => {
-                    // توجيه المتدرب إلى صفحة الكورس بعد التسجيل
-                    window.location.href = 'http://login.najyacademia.com';
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    
-                    // عرض رسائل خطأ بالعربية
-                    if (errorCode === 'auth/email-already-in-use') {
-                        errorMsg.textContent = 'هذا البريد الإلكتروني مستخدم بالفعل';
-                    } else if (errorCode === 'auth/weak-password') {
-                        errorMsg.textContent = 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
-                    } else if (errorCode === 'auth/invalid-email') {
-                        errorMsg.textContent = 'بريد إلكتروني غير صالح';
-                    } else {
-                        errorMsg.textContent = 'حدث خطأ أثناء التسجيل: ' + errorMessage;
-                    }
-                });
+  <script>
+  // 1. تعريف العناصر أولاً
+ const API_URL = 'https://script.google.com/macros/s/AKfycbzlshYfATBPjFJyYSkXcaxu9FI2Pxs462dKBSEq4TYFlsPhsfTtv0ykPYfCSGA8cXN_Xg/exec';
+    const loginForm = document.getElementById('loginForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const errorElement = document.getElementById('errorMessage');
+
+    function setButtonState(loading) {
+      submitBtn.disabled = loading;
+      submitBtn.textContent = loading ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول';
+    }
+
+    async function login(email, password) {
+      try {
+        setButtonState(true);
+        errorElement.style.display = 'none';
+
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password
+          }),
+          redirect: 'follow'
         });
+
+        const data = await response.json();
+
+        if (data.status === "FAILED") {
+          throw new Error(data.message || "بيانات الدخول غير صحيحة");
+        }
+
+        // حفظ بيانات المستخدم
+        localStorage.setItem('userData', JSON.stringify({
+          email: data.email,
+          unlockedWeeks: data.unlockedWeeks,
+          completedWeeks: data.completedWeeks,
+          currentWeek: data.currentWeek
+        }));
+
+        window.location.href = 'https://course.najyacademia.com/';
+      } catch (error) {
+        console.error('Login error:', error);
+        errorElement.textContent = error.message || 'حدث خطأ أثناء تسجيل الدخول';
+        errorElement.style.display = 'block';
+      } finally {
+        setButtonState(false);
+      }
+    }
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      
+      if (!email || !password) {
+        errorElement.textContent = 'يرجى ملء جميع الحقول';
+        errorElement.style.display = 'block';
+        return;
+      }
+      
+      await login(email, password);
+    });
+
+    // التحقق من تسجيل الدخول المسبق
+    if (localStorage.getItem('userData')) {
+      window.location.href = 'https://course.najyacademia.com/';
+    }
     </script>
 </body>
 </html>
